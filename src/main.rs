@@ -24,7 +24,8 @@ fn main() {
                         .unwrap_or_else(|error| error!("{}", error));
                 }
                 StartAs::Client => {
-                    // TODO: TCPクライアントの呼び出し
+                    tcp_client::connect(unchecked_address.as_str())
+                        .unwrap_or_else(|error| error!("{}", error));
                 }
             }
         }
