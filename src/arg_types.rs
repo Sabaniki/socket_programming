@@ -1,9 +1,6 @@
-use std::fmt;
-use std::fmt::Formatter;
-use std::intrinsics::write_bytes;
 use crate::app::create_app;
 use std::process::exit;
-use failure::_core::intrinsics::copy;
+use log::error;
 
 pub enum Protocol {
     Tcp,
@@ -15,8 +12,6 @@ pub enum StartAs {
     Client,
 }
 
-pub struct Address(str);
-
 pub fn get_args() -> (Protocol, StartAs, String) {
     let args = create_app();
     let protocol_type = match args.value_of("protocol_type") {
@@ -25,7 +20,7 @@ pub fn get_args() -> (Protocol, StartAs, String) {
                 "tcp" => Protocol::Tcp,
                 "udp" => Protocol::Udp,
                 _ => {
-                    eprintln!("specify tcp or udp. it's illegal argument.");
+                    error!("specify tcp or udp. it's illegal argument.");
                     exit(1);
                 }
             }
@@ -40,7 +35,7 @@ pub fn get_args() -> (Protocol, StartAs, String) {
                 "server" => StartAs::Server,
                 "client" => StartAs::Client,
                 _ => {
-                    eprintln!("specify server or client. it's illegal argument.");
+                    error!("specify server or client. it's illegal argument.");
                     exit(1);
                 }
             }

@@ -1,16 +1,18 @@
 use std::io::{Read, Write};
 use std::net::{TcpListener, TcpStream};
 use std::{str, thread};
+use log::{error, debug};
 
 // コマンドライン引数で指定されたソケットアドレスで接続を待ち受ける
 pub fn serve(address: &str) -> Result<(), failure::Error> {
-    let listener = TcpListener::bind(address)?; //変換できなかったら早期リターン
+    //foo()?→エラーが起きたら早期リターン
+    let listener = TcpListener::bind(address)?; //コネクションの待受け
     loop {
         let (stream, _) = listener.accept()?;
         // スレッドを立ち上げて接続に対処する．
         thread::spawn(move || {
             handler(stream).unwrap_or_else(|error| error!("{:?}", error));
-        })
+        });
     }
 }
 
@@ -24,6 +26,7 @@ fn handler(mut stream: TcpStream) -> Result<(), failure::Error> {
             debug!("Connection closed");
             return Ok(());
         }
+        // [..n_bytes]←先頭からn_bytes目までを指定するスライス
         print!("{}", str::from_utf8(&buffer[..n_bytes])?);
         stream.write_all(&buffer[..n_bytes])?;
     }
