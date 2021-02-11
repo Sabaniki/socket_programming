@@ -3,18 +3,21 @@ use std::fmt::Formatter;
 use std::intrinsics::write_bytes;
 use crate::app::create_app;
 use std::process::exit;
+use failure::_core::intrinsics::copy;
 
 pub enum Protocol {
     Tcp,
-    Udp
+    Udp,
 }
 
 pub enum StartAs {
     Server,
-    Client
+    Client,
 }
 
-pub fn get_args() -> (Protocol, StartAs) {
+pub struct Address(str);
+
+pub fn get_args() -> (Protocol, StartAs, String) {
     let args = create_app();
     let protocol_type = match args.value_of("protocol_type") {
         Some(protocol) => {
@@ -46,5 +49,9 @@ pub fn get_args() -> (Protocol, StartAs) {
             panic!();
         }
     };
-    (protocol_type, start_as)
+    let unchecked_address = match args.value_of("address_and_port") {
+        Some(addr) => addr.to_string(),
+        None => panic!()
+    };
+    (protocol_type, start_as, unchecked_address)
 }

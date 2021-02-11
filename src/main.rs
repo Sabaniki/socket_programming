@@ -6,7 +6,7 @@ use app::create_app;
 use arg_types::{Protocol, StartAs, get_args};
 
 fn main() {
-    let (protocol_type, start_as) = get_args();
+    let (protocol_type, start_as, unchecked_address) = get_args();
 
 
     match protocol_type {
