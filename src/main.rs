@@ -1,6 +1,7 @@
 mod app;
 mod arg_types;
 mod tcp_server;
+mod tcp_client;
 
 use std::env;
 
