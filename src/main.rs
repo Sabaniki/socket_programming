@@ -1,3 +1,7 @@
+mod app;
+
+use app::create_app;
+
 fn main() {
-    println!("Hello, world!");
+    let _ = create_app();
 }
