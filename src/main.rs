@@ -13,18 +13,19 @@ fn main() {
         Protocol::Tcp => {
             match start_as {
                 StartAs::Server => {
-                    // TODO: TCPサーバの呼び出し
-                },
+                    tcp_server::serve(unchecked_address.as_str())
+                        .unwrap_or_else(|error| error!("{}", error));
+                }
                 StartAs::Client => {
                     // TODO: TCPクライアントの呼び出し
                 }
             }
-        },
+        }
         Protocol::Udp => {
             match start_as {
                 StartAs::Server => {
                     // TODO: UDPサーバの呼び出し
-                },
+                }
                 StartAs::Client => {
                     // TODO: UDPクラアンとの呼び出し
                 }
