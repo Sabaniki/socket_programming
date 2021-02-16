@@ -1,11 +1,11 @@
 mod app;
 mod arg_types;
-mod tcp_server;
-mod tcp_client;
-mod udp_server;
-mod udp_client;
+mod udp;
+mod tcp;
 
 use std::env;
+use udp::{udp_client, udp_server};
+use tcp::{tcp_client, tcp_server};
 
 #[macro_use]
 extern crate log;
