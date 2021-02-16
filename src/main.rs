@@ -1,10 +1,9 @@
-mod app;
-mod arg_types;
 mod udp;
 mod tcp;
+mod util;
 
 use std::env;
-
+use util::{app, arg_types};
 
 #[macro_use]
 extern crate log;
