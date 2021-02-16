@@ -4,8 +4,7 @@ mod udp;
 mod tcp;
 
 use std::env;
-use udp::{udp_client, udp_server};
-use tcp::{tcp_client, tcp_server};
+
 
 #[macro_use]
 extern crate log;
@@ -23,11 +22,11 @@ fn main() {
         Protocol::Tcp => {
             match start_as {
                 StartAs::Server => {
-                    tcp_server::serve(address_str)
+                    tcp::server::serve(address_str)
                         .unwrap_or_else(|error| error!("{}", error));
                 }
                 StartAs::Client => {
-                    tcp_client::connect(address_str)
+                    tcp::client::connect(address_str)
                         .unwrap_or_else(|error| error!("{}", error));
                 }
             }
@@ -35,11 +34,11 @@ fn main() {
         Protocol::Udp => {
             match start_as {
                 StartAs::Server => {
-                    udp_server::serve(address_str)
+                    udp::server::serve(address_str)
                         .unwrap_or_else(|error| error!("{}", error));
                 }
                 StartAs::Client => {
-                    udp_client::communicate(address_str)
+                    udp::client::communicate(address_str)
                         .unwrap_or_else(|error| error!("{}", error));
                 }
             }
