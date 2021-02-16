@@ -9,6 +9,7 @@ pub fn communicate(address: &str) -> Result<(), failure::Error> {
         io::stdin().read_line(&mut input)?;
         socket.send_to(input.as_bytes(), address)?;
 
+        // 大きさは適当。1024より大きかったらその分は破棄される
         let mut buffer = [0u8; 1024];
         socket.recv_from(&mut buffer).expect("failed to receive");
         print!(
