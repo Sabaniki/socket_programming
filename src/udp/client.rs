@@ -2,6 +2,7 @@ use std::net::UdpSocket;
 use std::{io, str};
 
 pub fn communicate(address: &str) -> Result<(), failure::Error> {
+    // 0番ポートを指定することでOSがよしなに降ってくれる
     let socket = UdpSocket::bind("127.0.0.1:0")?;
     loop {
         let mut input = String::new();
