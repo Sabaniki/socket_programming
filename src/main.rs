@@ -3,6 +3,7 @@ mod arg_types;
 mod tcp_server;
 mod tcp_client;
 mod udp_server;
+mod udp_client;
 
 use std::env;
 
@@ -16,16 +17,17 @@ fn main() {
     env::set_var("RUST_LOG", "debug");
     env_logger::init();
     let (protocol_type, start_as, unchecked_address) = get_args();
+    let address_str = unchecked_address.as_str();
 
     match protocol_type {
         Protocol::Tcp => {
             match start_as {
                 StartAs::Server => {
-                    tcp_server::serve(unchecked_address.as_str())
+                    tcp_server::serve(address_str)
                         .unwrap_or_else(|error| error!("{}", error));
                 }
                 StartAs::Client => {
-                    tcp_client::connect(unchecked_address.as_str())
+                    tcp_client::connect(address_str)
                         .unwrap_or_else(|error| error!("{}", error));
                 }
             }
@@ -33,10 +35,11 @@ fn main() {
         Protocol::Udp => {
             match start_as {
                 StartAs::Server => {
-                    // TODO: UDPサーバの呼び出し
+                    udp_server::serve(address_str)
+                        .unwrap_or_else(|error| error!("{}", error));
                 }
                 StartAs::Client => {
-                    // TODO: UDPクラアンとの呼び出し
+                    // TODO: UDPクライアントの呼び出し
                 }
             }
         }
