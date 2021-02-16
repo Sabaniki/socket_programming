@@ -2,6 +2,7 @@ mod app;
 mod arg_types;
 mod tcp_server;
 mod tcp_client;
+mod udp_server;
 
 use std::env;
 
