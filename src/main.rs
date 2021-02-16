@@ -39,7 +39,8 @@ fn main() {
                         .unwrap_or_else(|error| error!("{}", error));
                 }
                 StartAs::Client => {
-                    // TODO: UDPクライアントの呼び出し
+                    udp_client::communicate(address_str)
+                        .unwrap_or_else(|error| error!("{}", error));
                 }
             }
         }
